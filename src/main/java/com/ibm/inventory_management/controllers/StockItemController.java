@@ -3,10 +3,10 @@ package com.ibm.inventory_management.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ibm.inventory_management.services.StockItemApi;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ibm.inventory_management.services.StockItemApi;
 
 @RestController
 public class StockItemController {

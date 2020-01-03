@@ -1,11 +1,12 @@
 package com.ibm.inventory_management.services;
 
 import static java.util.Arrays.asList;
+
 import java.util.List;
 
-import com.ibm.inventory_management.models.StockItem;
-
 import org.springframework.stereotype.Service;
+
+import com.ibm.inventory_management.models.StockItem;
 
 @Service
 public class StockItemService implements StockItemApi {
