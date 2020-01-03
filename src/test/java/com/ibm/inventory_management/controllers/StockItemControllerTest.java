@@ -1,6 +1,8 @@
 package com.ibm.inventory_management.controllers;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -13,15 +15,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Arrays;
+import java.util.List;
+
+import com.ibm.inventory_management.models.StockItem;
+import com.ibm.inventory_management.services.StockItemApi;
+
 @DisplayName("StockItemController")
 public class StockItemControllerTest {
 
     StockItemController controller;
+    StockItemApi service;
     MockMvc mockMvc;
 
     @BeforeEach
     public void setup() {
-        controller = spy(new StockItemController());
+        service = mock(StockItemApi.class);
+        controller = spy(new StockItemController(service));
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -43,5 +53,14 @@ public class StockItemControllerTest {
                     .andExpect(content().json("[]"));
         }
         
+        @Test
+        @DisplayName("When called then it should return the results of the StockItemService")
+        public void when_called_then_return_the_results_of_the_stockitemservice() throws Exception {
+            final List<StockItem> expectedResult = Arrays.asList(new StockItem());
+            when(service.listStockItems()).thenReturn(expectedResult);
+            mockMvc.perform(get("/stock-items").accept("application/json"))
+                    .andExpect(content().json("[{}]"));
+        }
+
     }
 }
